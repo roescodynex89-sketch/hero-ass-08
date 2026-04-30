@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "UV Protection Sunglasses",
+    "brand": "SunShade",
+    "price": 15,
+    "rating": 4.7,
+    "stock": 12,
+    "description": "Stylish UV protection sunglasses perfect for summer outings.",
+    "image": "/assets/image-1.jpg",
+    "category": "Accessories"
+  },
+  {
+    "id": 2,
+    "name": "Beach Summer Hat",
+    "brand": "SunnyStyle",
+    "price": 12,
+    "rating": 4.5,
+    "stock": 8,
+    "description": "Wide brim hat to protect you from the hot summer sun.",
+    "image": "/assets/image-2.jpg",
+    "category": "Fashion"
+  },
+  {
+    "id": 3,
+    "name": "Aloe Vera Sunscreen SPF 50",
+    "brand": "SkinCare+",
+    "price": 10,
+    "rating": 4.8,
+    "stock": 20,
+    "description": "Lightweight sunscreen with aloe vera for full sun protection.",
+    "image": "/assets/image-3.jpg",
+    "category": "Skincare"
+  },
+  {
+    "id": 4,
+    "name": "Men's Summer T-Shirt",
+    "brand": "CoolWear",
+    "price": 18,
+    "rating": 4.4,
+    "stock": 15,
+    "description": "Breathable cotton t-shirt perfect for hot weather.",
+    "image": "/assets/image-04.jpg",
+    "category": "Clothing"
+  },
+  {
+    "id": 5,
+    "name": "Women's Floral Summer Dress",
+    "brand": "BloomFit",
+    "price": 25,
+    "rating": 4.6,
+    "stock": 10,
+    "description": "Lightweight floral dress ideal for beach and casual outings.",
+    "image": "/assets/image-5.jpg",
+    "category": "Clothing"
+  },
+  {
+    "id": 6,
+    "name": "Beach Travel Bag",
+    "brand": "TravelLite",
+    "price": 20,
+    "rating": 4.5,
+    "stock": 9,
+    "description": "Spacious and stylish bag for all your beach essentials.",
+    "image": "/assets/image-6.jpg",
+    "category": "Accessories"
+  }
+]
