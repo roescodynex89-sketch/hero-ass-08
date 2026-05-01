@@ -5,55 +5,51 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import {useSearchParams} from "next/navigation"
+import { useSearchParams } from "next/navigation";
+
 const LoginPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-
-
   const searchParams = useSearchParams();
-const redirectPath = searchParams.get("redirect") || "/";
+  const redirectPath = searchParams.get("redirect") || "/";
 
   const onSubmit = async (data) => {
-  setLoading(true);
-  const { email, password } = data;
+    setLoading(true);
+    const { email, password } = data;
 
-  const { error } = await authClient.signIn.email({
-    email,
-    password,
-    rememberMe: true,
-    // ❌ callbackURL remove
-  });
+    const { error } = await authClient.signIn.email({
+      email,
+      password,
+      rememberMe: true,
+    });
 
-  setLoading(false);
+    setLoading(false);
 
-  if (error) {
-    alert(error.message || "Login failed ❌");
-  } else {
-    // ✅ redirect back
-    router.push(redirectPath);
-  }
-};
+    if (error) {
+      alert(error.message || "Login failed ");
+    } else {
+      router.push(redirectPath);
+    }
+  };
 
   const handleGoogleLogin = async () => {
-  await authClient.signIn.social({
-    provider: "google",
-    callbackURL: redirectPath, // ✅ dynamic redirect
-  });
-};
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: redirectPath,
+    });
+  };
 
   return (
-    /* ১. মেইন কন্টেইনারে min-h-screen এবং flex ব্যবহার করা হয়েছে যাতে কার্ডটি মাঝখানে থাকে */
     <div className="min-h-screen flex items-center justify-center bg-[#FFFBEB] px-4 py-12">
-      
-      {/* ২. max-w-md ব্যবহার করে কার্ডের উইডথ ফিক্সড করা হয়েছে যাতে এটি চ্যাপ্টা না হয় */}
-      <div className="max-w-md w-full bg-[#FFFBEB] rounded-[2rem] shadow-2xl p-8 md:p-12 border border-gray-50">
-
-        {/* Title */}
+      <div className="max-w-md w-full bg-[#FFFBEB] rounded-4xl shadow-2xl p-8 md:p-12 border border-gray-50">
         <div className="text-center mb-10">
-          <h2 className="text-4xl font-black text-[#111827] uppercase tracking-tighter italic">
+          <h2 className="text-4xl font-extrabold text-[#111827] ">
             Welcome Back
           </h2>
           <p className="text-gray-400 text-sm mt-2 font-medium">
@@ -61,34 +57,48 @@ const redirectPath = searchParams.get("redirect") || "/";
           </p>
         </div>
 
-        {/* Form */}
+        {/* form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-
-          {/* Email */}
+          {/* email */}
           <div>
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+            <label className="text-sm font-semibold text-[#111827]   ml-1">
+              Email Address
+            </label>
             <input
               {...register("email", { required: "Email is required" })}
               type="email"
-              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/10 outline-none transition-all text-sm"
-              placeholder="example@mail.com"
+              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] 
+               outline-none transition-all text-sm"
+              placeholder="Example@mail.com"
             />
-            {errors.email && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
-          {/* Password */}
+          {/* password */}
           <div>
             <div className="flex justify-between items-center ml-1">
-              <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Password</label>
-              <span className="text-[10px] text-[#F59E0B] font-bold uppercase underline cursor-pointer">Forgot?</span>
+              <label className="text-sm  font-semibold text-[#111827]">
+                Password
+              </label>
+              <span className="text-[10px] text-[#F59E0B] font-bold uppercase underline cursor-pointer">
+                Forgot?
+              </span>
             </div>
             <input
               {...register("password", { required: "Password is required" })}
               type="password"
-              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/10 outline-none transition-all text-sm"
-              placeholder="••••••"
+              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B]  outline-none transition-all text-sm"
+              placeholder="Enter your password"
             />
-            {errors.password && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Button */}
@@ -101,9 +111,11 @@ const redirectPath = searchParams.get("redirect") || "/";
           </button>
         </form>
 
-        {/* Google Login */}
+        {/* google Login */}
         <div className="mt-8 text-center">
-          <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-4">Or continue with</p>
+          <p className="text-[#111827] text-sm font-medium mb-4">
+            Or continue with
+          </p>
           <button
             onClick={handleGoogleLogin}
             className="w-full border border-gray-100 py-3 rounded-xl hover:bg-gray-50 flex items-center justify-center gap-2 text-xs font-bold transition-all active:scale-95 shadow-sm"
@@ -118,10 +130,10 @@ const redirectPath = searchParams.get("redirect") || "/";
           </button>
         </div>
 
-        {/* Register Link */}
+        {/* reg-link */}
         <p className="text-center text-gray-500 text-xs mt-8 font-medium">
           New here?{" "}
-          <Link href="/register" className="text-[#F59E0B] font-black underline uppercase">
+          <Link href="/register" className="text-[#F59E0B] font-semibold">
             Create Account
           </Link>
         </p>
