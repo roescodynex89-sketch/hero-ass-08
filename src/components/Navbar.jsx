@@ -41,7 +41,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop */}
+          {/* desktop */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <Link

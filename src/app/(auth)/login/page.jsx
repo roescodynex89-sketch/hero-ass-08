@@ -9,13 +9,6 @@ import { useSearchParams } from "next/navigation";
 
 import { Suspense } from "react";
 
-
-
-
-
-
-
-
 const LoginPage = () => {
   const {
     register,
@@ -153,8 +146,7 @@ const LoginPage = () => {
 
 // export default LoginPage;
 
-
-
+// vercel error fix
 
 export default function Page() {
   return (
