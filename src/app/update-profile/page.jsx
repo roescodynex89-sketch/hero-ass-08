@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 const UpdateProfile = () => {
   const router = useRouter();
   const { data: session } = authClient.useSession();
-  
+
   const [name, setName] = useState(session?.user?.name || "");
   const [image, setImage] = useState(session?.user?.image || "");
   const [loading, setLoading] = useState(false);
@@ -32,21 +32,18 @@ const UpdateProfile = () => {
   };
 
   return (
-    /* flex এবং items-center ফর্মটিকে স্ক্রিনের মাঝখানে রাখবে */
     <div className="min-h-[70vh] flex items-center justify-center bg-[#FFFBEB] px-4 py-12">
-      
-      {/* max-w-md ই কার্ডটিকে স্লিম রাখবে, চ্যাপ্টা হতে দেবে না */}
       <div className="w-full max-w-md bg-[#FFFBEB] p-8 rounded-3xl shadow-lg border border-gray-100">
-        
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-[#111827] uppercase tracking-tight">
             Update Profile
           </h2>
-          <p className="text-gray-400 text-xs mt-1">Update your account details</p>
+          <p className="text-gray-400 text-xs mt-1">
+            Update your account details
+          </p>
         </div>
 
         <form onSubmit={handleUpdate} className="space-y-6">
-          {/* Full Name */}
           <div>
             <label className="block text-[11px] font-bold text-[#111827]   mb-2 ml-1">
               Full Name
@@ -60,7 +57,6 @@ const UpdateProfile = () => {
             />
           </div>
 
-          {/* Photo URL */}
           <div>
             <label className="block text-[11px] font-bold text-[#111827]  mb-2 ml-1">
               Profile Image URL
@@ -74,7 +70,6 @@ const UpdateProfile = () => {
             />
           </div>
 
-          {/* Buttons */}
           <div className="pt-2">
             <button
               type="submit"
@@ -84,7 +79,7 @@ const UpdateProfile = () => {
               {loading ? "Saving..." : "Update Information"}
             </button>
 
-            <button 
+            <button
               type="button"
               onClick={() => router.back()}
               className="w-full  text-[#111827] text-[11px] font-bold  mt-4 hover:text-gray-600"

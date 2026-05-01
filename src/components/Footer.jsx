@@ -4,7 +4,6 @@ import {
   FaFacebookF,
   FaTwitter,
   FaInstagram,
-  FaLinkedinIn,
   FaEnvelope,
   FaPhoneAlt,
   FaMapMarkerAlt,
@@ -15,7 +14,6 @@ const Footer = () => {
     <footer className="bg-[#111827] text-white pt-12 pb-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-700 pb-10">
-          {/* Section 1: Logo & Info */}
           <div className="space-y-6">
             <Link href="/" className="text-2xl font-black tracking-tighter">
               SUN<span className="text-[#F59E0B]">CART</span>
@@ -47,7 +45,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Section 2: Quick Links */}
+          {/* Links */}
           <div>
             <h3 className="text-lg font-bold mb-6 text-[#F59E0B]">
               Quick Links
@@ -88,7 +86,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Section 3: Contact Info */}
+          {/*  Info */}
           <div>
             <h3 className="text-lg font-bold mb-6 text-[#F59E0B]">
               Contact Us
@@ -110,7 +108,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/*end */}
         <div className="mt-8 text-center text-gray-500 text-sm">
           <p>
             © 2026{" "}

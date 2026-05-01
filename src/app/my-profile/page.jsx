@@ -9,7 +9,6 @@ const ProfilePage = () => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
-  // ✅ protect this page
   useEffect(() => {
     if (!isPending && !user) {
       router.push("/login");
@@ -27,8 +26,6 @@ const ProfilePage = () => {
   return (
     <div className=" mx-auto  flex items-center justify-center bg-[#FFFBEB] px-4">
       <div className="bg-[#FFFBEB] p-8 rounded-2xl shadow-xl text-center w-full max-w-sm ">
-        
-        {/* Image */}
         {user.image && (
           <Image
             src={user.image}
@@ -39,17 +36,10 @@ const ProfilePage = () => {
           />
         )}
 
-        {/* Name */}
-        <h2 className="text-xl font-bold text-gray-800">
-          {user.name}
-        </h2>
+        <h2 className="text-xl font-bold text-gray-800">{user.name}</h2>
 
-        {/* Email */}
-        <p className="text-gray-500 text-sm mt-1">
-          {user.email}
-        </p>
+        <p className="text-gray-500 text-sm mt-1">{user.email}</p>
 
-        {/* Update button (bonus) */}
         <button
           onClick={() => router.push("/update-profile")}
           className="mt-6 bg-[#F59E0B] text-white px-4 py-2 rounded-lg"
