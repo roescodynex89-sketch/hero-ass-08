@@ -1,148 +1,15 @@
-// "use client";
-// import { useState } from "react";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-// import { HiMenu, HiX, HiUserCircle } from "react-icons/hi"; // User আইকন যোগ করা হয়েছে
-
-// const Navbar = () => {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const pathname = usePathname();
-
-//   // আপাতত লগইন ফলস রাখা হয়েছে
-//   const isLoggedIn = false;
-
-//   const navLinks = [
-//     { name: "Home", path: "/" },
-//     { name: "Products", path: "/products" },
-//     { name: "My Profile", path: "/my-profile" },
-//   ];
-
-//   const activeClass = "text-[#F59E0B] font-bold";
-//   const inactiveClass = "text-[#111827] hover:text-[#F59E0B] transition-colors";
-
-//   return (
-//     <nav className="bg-[#FFFBEB] shadow-sm sticky top-0 z-50 border-b border-gray-100">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <div className="flex justify-between h-16 items-center">
-//           {/* Logo */}
-//           <div className="shrink-0">
-//             <Link
-//               href="/"
-//               className="text-2xl font-black text-[#111827] tracking-tighter"
-//             >
-//               SUN<span className="text-[#F59E0B]">CART</span>
-//             </Link>
-//           </div>
-
-//           {/* Desktop Menu */}
-//           <div className="hidden md:flex items-center space-x-8">
-//             {navLinks.map((link) => (
-//               <Link
-//                 key={link.name}
-//                 href={link.path}
-//                 className={`text-sm font-medium ${
-//                   pathname === link.path ? activeClass : inactiveClass
-//                 }`}
-//               >
-//                 {link.name}
-//               </Link>
-//             ))}
-
-//             {isLoggedIn ? (
-//               <div className="flex items-center gap-3">
-//                 {/* ইমেজের বদলে এখন ইউজার আইকন */}
-//                 <HiUserCircle className="text-3xl text-[#F59E0B]" />
-//                 <button className="text-sm font-semibold text-[#111827] hover:text-red-500 transition-colors">
-//                   Logout
-//                 </button>
-//               </div>
-//             ) : (
-//               <Link
-//                 href="/login"
-//                 className="bg-[#F59E0B] text-[#FFFFFF] px-6 py-2 rounded-md font-semibold hover:bg-[#e08e0a] transition-all shadow-sm"
-//               >
-//                 Login
-//               </Link>
-//             )}
-//           </div>
-
-//           {/* Mobile Menu Button */}
-//           <div className="md:hidden flex items-center">
-//             <button
-//               onClick={() => setIsOpen(!isOpen)}
-//               className="text-[#111827] text-2xl focus:outline-none"
-//             >
-//               {isOpen ? <HiX /> : <HiMenu />}
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Mobile Menu Drawer */}
-//       <div
-//         className={`md:hidden absolute w-full bg-white border-t border-gray-100 transition-all duration-300 ease-in-out ${
-//           isOpen
-//             ? "top-16 opacity-100 shadow-xl"
-//             : "-top-100 opacity-0 pointer-events-none"
-//         }`}
-//       >
-//         <div className="px-4 pt-2 pb-6 space-y-2">
-//           {navLinks.map((link) => (
-//             <Link
-//               key={link.name}
-//               href={link.path}
-//               onClick={() => setIsOpen(false)}
-//               className={`block px-3 py-3 text-base font-medium rounded-md ${
-//                 pathname === link.path
-//                   ? "bg-orange-50 " + activeClass
-//                   : inactiveClass
-//               }`}
-//             >
-//               {link.name}
-//             </Link>
-//           ))}
-
-//           <div className="pt-4 border-t border-gray-100">
-//             {isLoggedIn ? (
-//               <div className="flex items-center gap-3 mb-4 px-3">
-//                 <HiUserCircle className="text-3xl text-[#F59E0B]" />
-//                 <span className="font-medium text-[#111827]">User Profile</span>
-//               </div>
-//             ) : null}
-
-//             <Link
-//               href={isLoggedIn ? "/logout" : "/login"}
-//               onClick={() => setIsOpen(false)}
-//               className={`block w-full text-center font-bold py-3 rounded-md shadow-md ${
-//                 isLoggedIn
-//                   ? "bg-red-50 text-red-600"
-//                   : "bg-[#F59E0B] text-white"
-//               }`}
-//             >
-//               {isLoggedIn ? "Logout" : "Login / Register"}
-//             </Link>
-//           </div>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
 "use client";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiMenu, HiX, HiUserCircle } from "react-icons/hi";
 import Image from "next/image";
-// ✅ তোমার auth client import করো
 import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-
-  // ✅ BetterAuth থেকে user নাও
+  // user
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
@@ -155,7 +22,7 @@ const Navbar = () => {
   const activeClass = "text-[#F59E0B] font-bold";
   const inactiveClass = "text-[#111827] hover:text-[#F59E0B] transition-colors";
 
-  // ✅ Logout function add
+  // logout function add
   const handleLogout = async () => {
     await authClient.signOut();
   };
@@ -164,10 +31,12 @@ const Navbar = () => {
     <nav className="bg-[#FFFBEB] shadow-sm sticky top-0 z-50 border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-
-          {/* Logo */}
+          {/* logo */}
           <div className="shrink-0">
-            <Link href="/" className="text-2xl font-black text-[#111827] tracking-tighter">
+            <Link
+              href="/"
+              className="text-2xl font-black text-[#111827] tracking-tighter"
+            >
               SUN<span className="text-[#F59E0B]">CART</span>
             </Link>
           </div>
@@ -188,12 +57,12 @@ const Navbar = () => {
 
             {user ? (
               <div className="flex items-center gap-3">
-                {/* ✅ user image */}
+                {/*  user image */}
                 {user.image ? (
                   <Image
-                  alt="Image"
-                  width={32}
-                  height={32}
+                    alt="Image"
+                    width={32}
+                    height={32}
                     src={user.image}
                     className="rounded-full"
                   />
@@ -210,7 +79,6 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="flex gap-3">
-                {/* ✅ Login + Register both */}
                 <Link
                   href="/login"
                   className="bg-[#F59E0B] text-white px-4 py-2 rounded-md font-semibold"
@@ -227,7 +95,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Button */}
+          {/* mobile button */}
           <div className="md:hidden">
             <button onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <HiX /> : <HiMenu />}
@@ -237,24 +105,88 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isOpen ? "block" : "hidden"} bg-white`}>
-        <div className="p-4 space-y-3">
-          {navLinks.map((link) => (
-            <Link key={link.name} href={link.path} onClick={() => setIsOpen(false)}>
-              {link.name}
-            </Link>
-          ))}
 
-          {user ? (
-            <button onClick={handleLogout} className="text-red-500">
-              Logout
-            </button>
-          ) : (
-            <div className="flex flex-col gap-2">
-              <Link href="/login">Login</Link>
-              <Link href="/register">Register</Link>
+      <div
+        className={`fixed inset-0 z-50 md:hidden transition-all duration-300 ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+      >
+        <div
+          className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+          onClick={() => setIsOpen(false)}
+        />
+
+        <div
+          className={`absolute right-0 top-0 h-full w-70 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col h-full p-6">
+            <div className="flex items-center justify-between mb-8">
+              <span className="text-xl font-bold text-[#F59E0B]">
+                SUN<span className="text-[#111827]">CART</span>
+              </span>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 bg-gray-50 rounded-full"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
             </div>
-          )}
+
+            <nav className="flex flex-col space-y-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-700 font-medium text-lg hover:text-[#F59E0B] transition-colors py-2 border-b border-gray-50"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="mt-auto pt-6 border-t border-gray-100">
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-2 bg-red-50 text-red-600 py-3 rounded-xl font-bold active:scale-95 transition-all"
+                >
+                  Logout
+                </button>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full text-center py-3 font-bold text-[#111827] border border-[#111827] rounded-xl active:scale-95 transition-all"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full text-center py-3 font-bold bg-[#111827] text-white rounded-xl shadow-lg active:scale-95 transition-all"
+                  >
+                    Register
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </nav>
