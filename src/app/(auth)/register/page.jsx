@@ -1,4 +1,3 @@
-
 "use client";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
@@ -7,76 +6,46 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 const RegisterPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // const onSubmit = async (data) => {
-  //   setLoading(true);
-  //   const { name, email, password, photo } = data;
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const { name, email, password, photo } = data;
 
-  //   const { data: res, error } = await authClient.signUp.email({
-  //     name,
-  //     email,
-  //     password,
-  //     image: photo,
-  //     // callbackURL: "/login",
-  //   });
+   
+    const { error } = await authClient.signUp.email({
+      name,
+      email,
+      password,
+      image: photo,
+    });
 
-  //   setLoading(false);
-  //   if (error) {
-  //     alert(error.message || "Registration failed ❌");
-  //   } else {
-  //     alert("Registration successful ✅");
-  //     router.push("/");
-  //   }
-  // };
+    if (error) {
+      setLoading(false);
+      alert(error.message || "Registration failed ");
+      return;
+    }
 
+    const loginRes = await authClient.signIn.email({
+      email,
+      password,
+    });
 
-const onSubmit = async (data) => {
-  setLoading(true);
-  const { name, email, password, photo } = data;
-
-  // 1️⃣ Register
-  const { error } = await authClient.signUp.email({
-    name,
-    email,
-    password,
-    image: photo,
-  });
-
-  if (error) {
     setLoading(false);
-    alert(error.message || "Registration failed ❌");
-    return;
-  }
 
-  // 2️⃣ Auto Login
-  const loginRes = await authClient.signIn.email({
-    email,
-    password,
-  });
-
-  setLoading(false);
-
-  if (loginRes.error) {
-    alert("Auto login failed ❌");
-  } else {
-    // 3️⃣ Go Home
-    router.push("/");
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
+    if (loginRes.error) {
+      alert("Auto login failed ");
+    } else {
+      router.push("/");
+    }
+  };
 
   const handleGoogleRegister = async () => {
     await authClient.signIn.social({
@@ -86,11 +55,9 @@ const onSubmit = async (data) => {
   };
 
   return (
-    // ফিক্সড: min-h-screen এবং py-12 ব্যবহার করা হয়েছে যাতে কার্ডটি মাঝখানে থাকে এবং প্যাডিং পায়
     <div className="min-h-screen flex items-center justify-center bg-[#FFFBEB] px-4 py-12">
-      <div className="max-w-md w-full bg-[#FFFBEB] rounded-[2rem] shadow-2xl p-8 md:p-12">
-
-        {/* Title */}
+      <div className="max-w-md w-full bg-[#FFFBEB] rounded-4xl shadow-2xl p-8 md:p-12">
+        {/* head */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-black text-[#111827] uppercase tracking-tighter">
             Create Account
@@ -100,79 +67,109 @@ const onSubmit = async (data) => {
           </p>
         </div>
 
-        {/* Form */}
+        {/* form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-
-          {/* Name */}
           <div>
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Full Name</label>
+            <label className="text-sm font-semibold  text-[#111827] ml-1">
+              Full Name
+            </label>
             <input
               {...register("name", { required: "Name is required" })}
-              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/10 outline-none transition-all text-sm"
+              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] 
+               outline-none transition-all text-sm"
               placeholder="Your Name"
             />
-            {errors.name && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.name.message}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.name.message}
+              </p>
+            )}
           </div>
 
-          {/* Email */}
+          {/* email */}
           <div>
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+            <label className="text-sm font-semibold  text-[#111827] ml-1">
+              Email Address
+            </label>
             <input
               {...register("email", { required: "Email is required" })}
               type="email"
-              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/10 outline-none transition-all text-sm"
+              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] 
+          outline-none transition-all text-sm"
               placeholder="example@mail.com"
             />
-            {errors.email && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
-          {/* Photo URL */}
+          {/* imf */}
           <div>
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Photo URL</label>
+            <label className="text-sm font-semibold  text-[#111827] ml-1">
+              Photo URL
+            </label>
             <input
               {...register("photo", { required: "Photo URL is required" })}
-              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/10 outline-none transition-all text-sm"
+              className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B]
+               
+               
+               outline-none transition-all text-sm"
               placeholder="https://image-url.com"
             />
-            {errors.photo && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.photo.message}</p>}
+            {errors.photo && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.photo.message}
+              </p>
+            )}
           </div>
 
-          {/* Password */}
+          {/* password */}
           <div>
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Password</label>
+            <label className="text-sm font-semibold  text-[#111827] ml-1">
+              Password
+            </label>
             <input
               {...register("password", { required: "Password is required" })}
               type="password"
               className="w-full px-5 py-3 border border-gray-100 rounded-xl mt-1.5 focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/10 outline-none transition-all text-sm"
-              placeholder="••••••"
+              placeholder="Make password"
             />
-            {errors.password && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-[10px] mt-1 ml-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
-          {/* Button */}
+          {/* button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#111827] text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-[#F59E0B] transition-all shadow-lg active:scale-95 mt-4"
+            className="w-full bg-[#111827] text-white py-4 rounded-xl font-bold text-sm  hover:bg-[#F59E0B] transition-all shadow-lg active:scale-95 mt-4"
           >
             {loading ? "Creating..." : "Register Now"}
           </button>
         </form>
 
-        {/* Google */}
+        {/* google */}
         <div className="mt-8 text-center">
-          <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-4">Or continue with</p>
+          <p className="text-[#111827] text-sm font-medium mb-4">
+            Or continue with
+          </p>
 
           <button
             onClick={handleGoogleRegister}
-            className="w-full border border-gray-100 py-3 rounded-xl hover:bg-gray-50 flex items-center justify-center gap-2 text-xs font-bold transition-all active:scale-95 shadow-sm"
+            className="w-full border border-gray-100 py-3 
+            cursor-pointer
+            rounded-xl hover:bg-gray-50 flex items-center justify-center gap-2 text-xs font-bold transition-all active:scale-95 shadow-sm"
           >
-         
             Continue with Google
           </button>
         </div>
 
-        {/* Login Link */}
+        {/* back */}
         <p className="text-center text-gray-500 text-xs mt-8 font-medium">
           Already have an account?{" "}
           <Link href="/login" className="text-[#F59E0B] font-black underline">
