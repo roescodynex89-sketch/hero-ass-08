@@ -28,7 +28,7 @@ const tips = [
 
 export default function ExtraSection() {
   return (
-    <section className="py-16 bg-gradient-to-b from-orange-50 to-white">
+    <section className="py-16 bg-[#FFFBEB]">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold animate__animated animate__fadeInUp">
           🌴 Summer Care Tips
@@ -45,9 +45,7 @@ export default function ExtraSection() {
             className="p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition duration-300 hover:-translate-y-1 animate__animated animate__fadeInUp"
             style={{ animationDelay: `${i * 0.2}s` }}
           >
-            <div className="text-3xl text-orange-500 mb-3">
-              {tip.icon}
-            </div>
+            <div className="text-3xl text-orange-500 mb-3">{tip.icon}</div>
             <h3 className="font-semibold text-lg">{tip.title}</h3>
             <p className="text-sm text-gray-500 mt-2">{tip.desc}</p>
           </div>
