@@ -23,9 +23,9 @@ const UpdateProfile = () => {
     setLoading(false);
 
     if (error) {
-      alert(error.message || "Update failed ❌");
+      alert(error.message || "Update failed ");
     } else {
-      alert("Profile updated successfully! ✅");
+      alert("Profile updated successfully! ");
       router.push("/my-profile");
       router.refresh();
     }
